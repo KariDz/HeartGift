@@ -11,7 +11,7 @@ The site in `site/` is **not a new recreation**: it originates from browser-deli
 5. Cupid and envelope animation
 6. Typewriter-style personal letter
 
-**Changes in this adaptation:** local JSON configuration; replacement of the original gift's photos/text with 37 user-supplied WebP images (11 previously hosted plus 26 newly added on 11 November 2026) and the 19.11 message; removal of references to third-party guest photos; disabled telemetry; local Three.js, fonts and animation dependencies; an original instrumental audio loop in place of the copyrighted commercial track; updated social metadata; GitHub Pages publishing; a QR-code generator; and a non-repeating photo mapping (one unique gallery tile and one flying image for each configured photo).
+**Changes in this adaptation:** local JSON configuration; replacement of the original gift's photos/text with 37 user-supplied WebP images (11 previously hosted plus 26 newly added on 11 November 2026) and the 19.11 message; removal of references to third-party guest photos; disabled telemetry; local Three.js, fonts and animation dependencies; the original DLove MP3 restored by the project owner for noncommercial use (per the owner's claimed authorization), with the independently composed ambient loop retained as an optional alternative; updated social metadata; GitHub Pages publishing; a QR-code generator; and a non-repeating photo mapping (one unique gallery tile and one flying image for each configured photo).
 
 This project contains **only the frontend code and assets delivered to a public browser**. The backend/database/original authoring source and server-only functionality are **not available** and are not represented here.
 
@@ -20,3 +20,7 @@ This project contains **only the frontend code and assets delivered to a public 
 Public access to a webpage does not grant a license to republish its code, graphics or brand assets. The original DLove frontend and its graphics may be subject to copyright. All rights remain with their respective owners. The previous independent MIT-licensed implementation is preserved on the `backup-independent-v1` branch, not described as the license of this adapted viewer.
 
 Before distributing, forking or commercially using this adaptation, confirm you have permission to use the upstream viewer and its graphics. No blanket open-source license is asserted for `site/`.
+
+## Noncommercial soundtrack note
+
+The owner reported obtaining permission for noncommercial use of the original DLove soundtrack “Nơi Này Có Anh”. The recording is published for this personalized noncommercial gift, but is **not** included in a general open-source license. Users must secure their own permissions for reuse, republication or commercial purposes.

@@ -21,7 +21,14 @@ assert 'three.module.js' in html and 'startCupidLetterSequence' in html,'Origina
 assert (SITE/'vendor/three/build/three.module.js').is_file(),'Missing local Three.js'
 assert (SITE/'assets/fonts/Pacifico-Regular.ttf').is_file(),'Missing local font'
 assert not any((SITE/'assets/media').glob('*')) if (SITE/'assets/media').exists() else True, 'Original guest photos should not be published'
-assert not list(SITE.rglob('noinaycoanh.mp3')),'Do not redistribute the original commercial song'
+# The user has confirmed permission for noncommercial inclusion of the DLove soundtrack.
+if cfg.get('bgMusic') == 'musics/noinaycoanh.mp3':
+    soundtrack = SITE/'musics/noinaycoanh.mp3'
+    assert soundtrack.is_file() and soundtrack.stat().st_size > 1_000_000, 'Original MP3 soundtrack missing'
+    with soundtrack.open('rb') as audio:
+        header=audio.read(12)
+    assert header[:3]==b'ID3' or (header[0]==0xff and (header[1]&0xe0)==0xe0), 'Invalid MP3 header'
+    assert "const defaultMusicUrl = 'musics/noinaycoanh.mp3';" in html, 'MP3 fallback path not configured'
 all_photos=[]
 for i,p in enumerate(cfg['sphereImages'],1):
     photo=(SITE/p).resolve()

@@ -21,7 +21,7 @@ The current gift retains the original viewer's interactive sequence:
 5. **Cupid delivers an envelope** — tap the letter button, then the envelope.
 6. **A typewriter love letter** — the exact 19.11 wish appears, followed by a final photograph.
 
-The 37 configured photographs were optimized as WebP. They are configured in `site/gift-config.json`. The original viewer's third-party guest photos, telemetry loader and commercial song are **not** redistributed here; a short, newly synthesized ambient loop is used instead.
+The 37 configured photographs were optimized as WebP and are configured in `site/gift-config.json`. Third-party guest photos and telemetry are excluded. The original DLove soundtrack **“Nơi Này Có Anh”** is now included at the request of the project owner, who confirmed permission for **noncommercial use**. Music rights remain with their respective holder and are not granted to downstream forks.
 
 ## Start locally
 
@@ -69,9 +69,9 @@ The existing edition intentionally uses the exact message:
 
 ### Replace the pictures
 
-Put new images under `site/images/photos/` and update the paths in `site/gift-config.json`. We recommend WebP, with the longest edge around 1200 px. This repository currently contains **37 real personal images**, not placeholder examples, at `site/images/photos/01.webp` through `37.webp`. The image at `10.webp` is used for the glowing morph; `23.webp` (from the newly supplied two-person picture) is the photo in the letter.
+Put new images under `site/images/photos/` and update the paths in `site/gift-config.json`. We recommend WebP, with the longest edge around 1200 px. This repository currently contains **37 real personal images**, not placeholder examples, at `site/images/photos/01.webp` through `37.webp`. The image at `10.webp` is used for the glowing morph. **`01.webp`** is now the newly supplied two-person photo; the old `01.webp` was preserved as **`23.webp`**. The letter ends with **`11.webp`**, the photo containing the words **“em yêu phong”**.
 
-**Update of 11 November 2026:** 38 JPGs were reviewed; 11 were visually near-identical to existing photos and one pair of new JPGs was near-identical. The remaining **26 photos** were added as `12.webp`–`37.webp`. The separately supplied photo of two people (also present in the ZIP) was used as the source for `23.webp` and is shown in the final letter.
+**Update of 11 November 2026:** 38 JPGs were reviewed; 11 were visually near-identical to existing photos and one pair of new JPGs was near-identical. The remaining **26 photos** were added as `12.webp`–`37.webp`. The separately supplied photo of two people (also present in the ZIP) was originally saved as `23.webp`; after the later request it was moved to image 1, with the original image 1 swapped to 23. The final letter now uses image 11.
 
 **No artificial repeats:** the original viewer rendered 84 sphere image tiles and 40 floating photos from 11 inputs. This edition dynamically creates **exactly one sphere tile and one flying photo per input image**. Adding more photos automatically expands the gallery without cycling textures.
 
@@ -88,16 +88,20 @@ A backup of the configuration is kept in `workspace/temp/heartgift/photo-import-
 
 ### Background music
 
-The default public version plays an original ambient loop rather than an unlicensed commercial recording. To use **“Nơi Này Có Anh”**, provide a copy of the audio that you have permission to publish and distribute on GitHub Pages, then run:
+The live gift now uses the original DLove **“Nơi Này Có Anh”** MP3, stored at `site/musics/noinaycoanh.mp3` and referenced by `bgMusic` in `site/gift-config.json`. The previous synthesized ambient loop is retained as an optional local alternative, but is no longer the default.
+
+The project owner stated that they obtained permission to use this song **for noncommercial purposes**. That statement does not license the recording for general open-source redistribution, remixes, or commercial use by other people. The rights holder retains their rights. GitHub Pages makes the file publicly downloadable; please verify that your authorization covers hosting on a public site.
+
+To replace the background music with another recording for which you have publishing rights:
 
 ```bash
-python3 scripts/install_music.py /path/to/noi-nay-co-anh.mp3 --confirm-public-usage-rights
+python3 scripts/install_music.py /path/to/authorized-track.mp3 --confirm-public-usage-rights
 npm run check
 npm run build
 npm test
 ```
 
-The music installer adds the local file under `site/musics/` and updates `bgMusic` automatically. **Do not run it unless you have the necessary music rights.** GitHub Pages serves the soundtrack publicly to anyone who opens the site. The original DLove-hosted MP3 is not republished in this repository.
+Music begins after a user gesture to comply with browser autoplay restrictions. The MP3 is served locally and does not need any API or third-party streaming service.
 
 **Privacy:** Because this repository and GitHub Pages are public, anyone with the URL can view the photos and text. Obtain the appropriate consent before publishing someone else's photographs or private messages. Deleting an image in a later commit does not necessarily remove it from Git history.
 
@@ -111,7 +115,8 @@ HeartGift/
 │   ├── gift-config.example.json
 │   ├── images/photos/            # 37 personal WebP pictures
 │   ├── assets/                   # Original viewer's required static assets/fonts
-│   ├── musics/heartgift-ambient.wav
+│   ├── musics/noinaycoanh.mp3    # Selected soundtrack (noncommercial permission)
+│   ├── musics/heartgift-ambient.wav  # Optional local instrumental
 │   ├── vendor/                   # Local Three.js & simplex-noise
 │   └── qr/                       # Heart QR PNG + SVG
 ├── scripts/

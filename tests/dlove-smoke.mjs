@@ -35,6 +35,18 @@ try{
  }
  browser=await chromium.launch({headless:true,...(process.env.CHROME_BINARY?{executablePath:process.env.CHROME_BINARY}:{}),args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl','--disable-dev-shm-usage']});
  const page=await browser.newPage({viewport:{width:900,height:780}});
+ // Capture real Audio elements created by the original DLove viewer; do not mock playback.
+ await page.addInitScript(()=>{
+   const NativeAudio=window.Audio;
+   window.__heartgiftAudioInstances=[];
+   function AuditedAudio(...args){
+     const element=new NativeAudio(...args);
+     window.__heartgiftAudioInstances.push(element);
+     return element;
+   }
+   AuditedAudio.prototype=NativeAudio.prototype;
+   window.Audio=AuditedAudio;
+ });
  page.on('pageerror',e=>errors.push(e.message));
  page.on('request',req=>{if(req.url().includes('apiv2.deargift.online'))externalApiCalls.push(req.url())});
  page.on('response',r=>{if(r.status()>=400 && r.url().startsWith(url))errors.push('HTTP '+r.status()+' '+r.url())});
@@ -47,6 +59,16 @@ try{
  const start=await page.locator('#start-wrap').boundingBox();
  await page.mouse.move(start.x+start.width/2,start.y+start.height/2);await page.mouse.down();await sleep(1450);await page.mouse.up();
  record('held-start');
+ // Verify the authorized original MP3 is really loaded and playback has begun.
+ await page.waitForFunction((track)=>window.__heartgiftAudioInstances?.some(audio=>
+   audio.src.includes(track) && audio.readyState>=1 && !audio.paused && audio.currentTime>0
+ ),'noinaycoanh.mp3',{timeout:12000,polling:300});
+ const musicState=await page.evaluate(()=>{
+   const audio=window.__heartgiftAudioInstances.find(a=>a.src.includes('noinaycoanh.mp3'));
+   return {src:audio.src,readyState:audio.readyState,paused:audio.paused,position:audio.currentTime,duration:audio.duration};
+ });
+ if(!Number.isFinite(musicState.duration)||musicState.duration<30)throw Error('Original soundtrack duration invalid: '+JSON.stringify(musicState));
+ record('original-music-playing',musicState);
  await page.locator('#sphere-click-hint').waitFor({state:'attached',timeout:8000});
  // Wait for the actual 3D gallery rather than assuming fixed morph duration.
  await page.waitForFunction(()=>Number(document.documentElement.dataset.heartgiftSphereTiles)>0,undefined,{timeout:75000,polling:300});
