@@ -38,13 +38,19 @@ try{
  await page.mouse.move(start.x+start.width/2,start.y+start.height/2);await page.mouse.down();await sleep(1450);await page.mouse.up();
  record('held-start');
  await page.locator('#sphere-click-hint').waitFor({state:'attached',timeout:8000});
- // Full morph takes about 23 seconds before the sphere images appear.
- await sleep(27500);
+ // Wait for the actual 3D gallery rather than assuming fixed morph duration.
+ await page.waitForFunction(()=>Number(document.documentElement.dataset.heartgiftSphereTiles)>0,undefined,{timeout:75000,polling:300});
+ const tileCount=Number(await page.locator('html').getAttribute('data-heartgift-sphere-tiles'));
+ if(tileCount!==cfg.sphereImages.length)throw Error('Sphere repeated photos: '+tileCount+' tiles for '+cfg.sphereImages.length+' images');
+ record('sphere-has-unique-tiles',{tileCount});
+ await sleep(4900); // Wait for the incoming sphere's intro animation before tapping.
  await page.screenshot({path:path.join(logs,'original-sphere-with-user-photos.png')});
- await page.mouse.click(450,390);await sleep(2000);await page.mouse.click(450,390);
+ await page.mouse.click(450,390);await sleep(2200);await page.mouse.click(450,390);
  const fly=page.locator('#btn-flying-corner');
  await fly.waitFor({state:'visible',timeout:12000});
- record('sphere-two-clicks');
+ const flyingCount=Number(await page.locator('html').getAttribute('data-heartgift-flying-cards'));
+ if(flyingCount!==cfg.sphereImages.length)throw Error('Flying cards repeated photos: '+flyingCount+' for '+cfg.sphereImages.length);
+ record('sphere-two-clicks',{flyingCount});
  await fly.click();
  await page.locator('#letter-envelope-img.visible').waitFor({timeout:12000});
  record('cupid-envelope-visible');

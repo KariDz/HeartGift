@@ -71,6 +71,32 @@ The existing edition intentionally uses the exact message:
 
 Put new images under `site/images/photos/` and update the paths in `site/gift-config.json`. We recommend WebP, with the longest edge around 1200 px. This repository currently contains **eleven real personal images**, not placeholder examples, at `site/images/photos/01.webp` through `11.webp`. The image at `10.webp` is used for the glowing morph; `11.webp` is also the photo in the letter.
 
+**No artificial repeats:** the original viewer rendered 84 sphere image tiles and 40 floating photos from 11 inputs. This edition dynamically creates **exactly one sphere tile and one flying photo per input image**. Adding more photos automatically expands the gallery without cycling textures.
+
+For a folder or ZIP containing extra pictures, the included importer converts them to optimized WebP, skips exact and visually near-identical duplicates, and appends them to the configuration:
+
+```bash
+python3 scripts/add_photos.py /path/to/new-photos.zip
+npm run check
+npm run build
+npm test
+```
+
+A backup of the configuration is kept in `workspace/temp/heartgift/photo-import-backups/`. Use `--keep-similar` only if you intentionally want similar pictures. The script never pushes your photos automatically; review what you are publishing first.
+
+### Background music
+
+The default public version plays an original ambient loop rather than an unlicensed commercial recording. To use **“Nơi Này Có Anh”**, provide a copy of the audio that you have permission to publish and distribute on GitHub Pages, then run:
+
+```bash
+python3 scripts/install_music.py /path/to/noi-nay-co-anh.mp3 --confirm-public-usage-rights
+npm run check
+npm run build
+npm test
+```
+
+The music installer adds the local file under `site/musics/` and updates `bgMusic` automatically. **Do not run it unless you have the necessary music rights.** GitHub Pages serves the soundtrack publicly to anyone who opens the site. The original DLove-hosted MP3 is not republished in this repository.
+
 **Privacy:** Because this repository and GitHub Pages are public, anyone with the URL can view the photos and text. Obtain the appropriate consent before publishing someone else's photographs or private messages. Deleting an image in a later commit does not necessarily remove it from Git history.
 
 ## Project structure
@@ -89,6 +115,8 @@ HeartGift/
 ├── scripts/
 │   ├── validate_site.py         # Ensure the offline site has all required files
 │   ├── build_site.py            # Copy the static website to dist/
+│   ├── add_photos.py            # Add + deduplicate WebP photos
+│   ├── install_music.py         # Install authorized local soundtrack
 │   ├── heart_qr.py              # QR-code generator
 │   └── _vendor/                 # Python qrcode library (BSD-3-Clause)
 ├── tests/
