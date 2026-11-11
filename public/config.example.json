@@ -1,0 +1,31 @@
+{
+  "pageTitle": "A little gift for you ♥",
+  "topbarNote": "Handmade with love",
+  "intro": {
+    "title": "A small gift,",
+    "emphasis": "a whole lot of love.",
+    "subtitle": "Something special is waiting just for you.",
+    "button": "Hold to begin"
+  },
+  "morphTexts": [
+    "YOU",
+    "ARE",
+    "LOVED"
+  ],
+  "photos": [
+    "images/photos/01.webp",
+    "images/photos/02.webp",
+    "images/photos/03.webp"
+  ],
+  "letter": {
+    "greeting": "Dear you,",
+    "message": "Every day is brighter with you in it. Thank you for being part of my life.",
+    "image": "images/letter-cover.svg",
+    "caption": "Our little memory ♥",
+    "signature": "With love"
+  },
+  "music": {
+    "src": "",
+    "volume": 0.4
+  }
+}

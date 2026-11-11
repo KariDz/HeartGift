@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#170c23" />
+  <meta name="description" content="HeartGift — a little universe of love, memories, and heartfelt words." />
+  <link rel="icon" href="./images/heart.svg" type="image/svg+xml" />
+  <title>HeartGift · A little something for you</title>
+</head>
+<body>
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+  <div class="ambient-glow ambient-glow--one" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="HeartGift home">
+      <span class="brand-mark" aria-hidden="true">♥</span>
+      <span>Heart<span class="brand-light">Gift</span></span>
+    </a>
+    <span class="topbar-note" id="topbarNote">Made with love · 19.11</span>
+  </header>
+
+  <main id="app">
+    <section id="intro" class="stage is-active" aria-labelledby="introTitle">
+      <div class="intro-body">
+        <div class="intro-art" aria-hidden="true">
+          <span class="intro-orbit orbit-one"></span>
+          <span class="intro-orbit orbit-two"></span>
+          <span class="intro-heart">♥</span>
+          <span class="tiny-star star-one">✦</span>
+          <span class="tiny-star star-two">✧</span>
+          <span class="tiny-star star-three">✶</span>
+        </div>
+        <div class="eyebrow"><span class="eyebrow-line"></span> A LITTLE SOMETHING FOR YOU <span class="eyebrow-line"></span></div>
+        <h1 id="introTitle">A small gift,<br /><em>a whole lot of love.</em></h1>
+        <p class="intro-copy" id="introCopy">There is something special waiting just for you.</p>
+        <button id="startButton" class="hold-button" type="button" aria-label="Press and hold to begin">
+          <span class="hold-button-progress" aria-hidden="true"></span>
+          <span class="hold-button-label"><span class="button-heart">♥</span><span id="startLabel">Hold to begin</span></span>
+        </button>
+        <p class="hint-small" id="holdHint">Press and hold for a moment</p>
+      </div>
+    </section>
+
+    <section id="morph" class="stage" aria-live="polite" aria-label="A special message">
+      <div class="morph-body">
+        <span class="morph-kicker">FROM THE HEART</span>
+        <div class="morph-word-wrap"><span id="morphWord" class="morph-word"></span></div>
+        <p class="morph-under">Every word is meant for you.</p>
+      </div>
+    </section>
+
+    <section id="gallery" class="stage" aria-label="A galaxy of memories">
+      <div class="gallery-heading">
+        <p class="eyebrow">OUR LITTLE GALAXY</p>
+        <h2>Every memory<br /><em>is a universe.</em></h2>
+      </div>
+      <div id="sphereRoot" class="sphere-root" role="group" aria-label="Interactive sphere of memory photos"></div>
+      <p id="galleryHint" class="gallery-hint">Tap the sphere to get closer</p>
+      <button id="openLetterButton" class="pill-button is-hidden" type="button">Open your letter <span aria-hidden="true">✉</span></button>
+    </section>
+
+    <section id="letter" class="stage" aria-label="A personal letter">
+      <div class="letter-scene">
+        <div id="cupid" class="cupid" aria-hidden="true">♥<span>↝</span></div>
+        <button id="envelope" class="envelope" type="button" aria-label="Open the envelope">
+          <span class="envelope-back"></span><span class="envelope-fold"></span><span class="envelope-front"></span>
+          <span class="envelope-seal" aria-hidden="true">♥</span>
+        </button>
+        <p id="envelopeHint" class="gallery-hint">A letter, sealed with love. Tap to open.</p>
+      </div>
+      <article id="letterCard" class="letter-card" aria-label="Your letter">
+        <div class="letter-flourish" aria-hidden="true">✦ &nbsp; ♥ &nbsp; ✦</div>
+        <p class="letter-greeting" id="letterGreeting">Dear you,</p>
+        <p class="letter-content" id="letterContent"></p>
+        <figure id="letterPhotoWrap" class="letter-photo-wrap is-hidden">
+          <img id="letterPhoto" alt="A special memory" loading="lazy" />
+          <figcaption id="letterCaption"></figcaption>
+        </figure>
+        <p class="letter-signature" id="letterSignature"></p>
+        <button class="restart-button" id="restartButton" type="button">Watch again <span aria-hidden="true">↻</span></button>
+      </article>
+    </section>
+  </main>
+  <footer class="footer"><span>Made with <span class="footer-heart">♥</span> · HeartGift</span><a id="qrLink" href="./qr/heartgift.png" target="_blank" rel="noopener" download>Share this moment ↗</a></footer>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
