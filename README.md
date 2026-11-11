@@ -16,12 +16,12 @@ The current gift retains the original viewer's interactive sequence:
 
 1. **Hold to begin** — start the surprise.
 2. **Glowing particle morphs** — animated text and a personal photo.
-3. **3D memory sphere** — all eleven photos mapped around a sphere.
+3. **3D memory sphere** — all 37 unique photos mapped around a sphere.
 4. **Click twice** — zoom into the sphere and release the floating photo gallery.
 5. **Cupid delivers an envelope** — tap the letter button, then the envelope.
 6. **A typewriter love letter** — the exact 19.11 wish appears, followed by a final photograph.
 
-The eleven supplied photographs were optimized as WebP. They are configured in `site/gift-config.json`. The original viewer's third-party guest photos, telemetry loader and commercial song are **not** redistributed here; a short, newly synthesized ambient loop is used instead.
+The 37 configured photographs were optimized as WebP. They are configured in `site/gift-config.json`. The original viewer's third-party guest photos, telemetry loader and commercial song are **not** redistributed here; a short, newly synthesized ambient loop is used instead.
 
 ## Start locally
 
@@ -69,7 +69,9 @@ The existing edition intentionally uses the exact message:
 
 ### Replace the pictures
 
-Put new images under `site/images/photos/` and update the paths in `site/gift-config.json`. We recommend WebP, with the longest edge around 1200 px. This repository currently contains **eleven real personal images**, not placeholder examples, at `site/images/photos/01.webp` through `11.webp`. The image at `10.webp` is used for the glowing morph; `11.webp` is also the photo in the letter.
+Put new images under `site/images/photos/` and update the paths in `site/gift-config.json`. We recommend WebP, with the longest edge around 1200 px. This repository currently contains **37 real personal images**, not placeholder examples, at `site/images/photos/01.webp` through `37.webp`. The image at `10.webp` is used for the glowing morph; `23.webp` (from the newly supplied two-person picture) is the photo in the letter.
+
+**Update of 11 November 2026:** 38 JPGs were reviewed; 11 were visually near-identical to existing photos and one pair of new JPGs was near-identical. The remaining **26 photos** were added as `12.webp`–`37.webp`. The separately supplied photo of two people (also present in the ZIP) was used as the source for `23.webp` and is shown in the final letter.
 
 **No artificial repeats:** the original viewer rendered 84 sphere image tiles and 40 floating photos from 11 inputs. This edition dynamically creates **exactly one sphere tile and one flying photo per input image**. Adding more photos automatically expands the gallery without cycling textures.
 
@@ -107,7 +109,7 @@ HeartGift/
 │   ├── index.html                # DLove browser-delivered viewer (adapted)
 │   ├── gift-config.json          # All editable content and toggles
 │   ├── gift-config.example.json
-│   ├── images/photos/            # 11 personal WebP pictures
+│   ├── images/photos/            # 37 personal WebP pictures
 │   ├── assets/                   # Original viewer's required static assets/fonts
 │   ├── musics/heartgift-ambient.wav
 │   ├── vendor/                   # Local Three.js & simplex-noise

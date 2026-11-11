@@ -37,6 +37,8 @@ for key in ('particleImage','bgMusic'):
     assert p.is_relative_to(SITE.resolve()) and p.is_file(),f'Missing local {key} file'
 for p in (SITE/cfg['letter']['image'],SITE/'qr/heartgift.png',SITE/'qr/heartgift.svg'):
     assert p.is_file(),f'Missing {p}'
+with Image.open(SITE/cfg['letter']['image']) as letter_image:
+    letter_image.verify()
 print('VALIDATED: Original viewer,',len(all_photos),'unique WebP images, exact wish, local fonts/music/vendors, local QR')
 print('Personal photos total:',sum(p.stat().st_size for p in all_photos),'bytes')
 print('Website files:',sum(1 for _ in SITE.rglob('*') if _.is_file()))

@@ -74,7 +74,7 @@ try{
  if(!(await page.locator('#letterImageWrap').isVisible()))throw Error('Letter photo missing');
  await page.locator('#letterInlineImage').evaluate(async img=>{if(!img.complete)await new Promise(r=>{img.onload=r;img.onerror=r});if(!img.naturalWidth)throw Error('Letter image did not load')});
  const finalSrc=await page.locator('#letterInlineImage').getAttribute('src');
- if(!finalSrc?.includes('images/photos/11.webp'))throw Error('Unexpected letter image '+finalSrc);
+ if(!finalSrc?.includes(cfg.letter.image))throw Error('Unexpected letter image '+finalSrc+' expected '+cfg.letter.image);
  await page.screenshot({path:path.join(logs,'original-letter-with-user-photos.png')});
  record('exact-letter-and-final-photo',{length:received.length,finalSrc});
  if(externalApiCalls.length)throw Error('Original API called: '+externalApiCalls.join('; '));

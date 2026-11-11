@@ -11,7 +11,7 @@ The site in `site/` is **not a new recreation**: it originates from browser-deli
 5. Cupid and envelope animation
 6. Typewriter-style personal letter
 
-**Changes in this adaptation:** local JSON configuration; replacement of the original gift's photos/text with 11 user-supplied WebP images and the 19.11 message; removal of references to third-party guest photos; disabled telemetry; local Three.js, fonts and animation dependencies; an original instrumental audio loop in place of the copyrighted commercial track; updated social metadata; GitHub Pages publishing; a QR-code generator; and a non-repeating photo mapping (one unique gallery tile and one flying image for each configured photo).
+**Changes in this adaptation:** local JSON configuration; replacement of the original gift's photos/text with 37 user-supplied WebP images (11 previously hosted plus 26 newly added on 11 November 2026) and the 19.11 message; removal of references to third-party guest photos; disabled telemetry; local Three.js, fonts and animation dependencies; an original instrumental audio loop in place of the copyrighted commercial track; updated social metadata; GitHub Pages publishing; a QR-code generator; and a non-repeating photo mapping (one unique gallery tile and one flying image for each configured photo).
 
 This project contains **only the frontend code and assets delivered to a public browser**. The backend/database/original authoring source and server-only functionality are **not available** and are not represented here.
 
