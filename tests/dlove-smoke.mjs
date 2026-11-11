@@ -17,22 +17,32 @@ function freePort(){return new Promise((resolve,reject)=>{
  const s=createServer();s.on('error',reject);s.listen(0,'127.0.0.1',()=>{const port=s.address().port;s.close(()=>resolve(port))});
 })}
 let server,browser,port;
+const externalApiCalls=[];
 try{
- port=await freePort();
- server=spawn('python3',['-m','http.server',String(port),'--bind','127.0.0.1','--directory',path.join(base,'site')],{cwd:base,stdio:['ignore','pipe','pipe']});
- writeFileSync(path.join(logs,'resource-registry.json'),JSON.stringify({task_id:'dlove-original-1911-smoke',owner:'TASK-OWNED',pid:server.pid,port,created:new Date().toISOString(),cwd:base},null,2));
- const url='http://127.0.0.1:'+port+'/';
- for(let i=0;i<70;i++){if(server.exitCode!==null)throw Error('server exited');
-  try{if((await fetch(url)).ok)break;}catch(_){/* retry */} await sleep(120);
+ let url=process.env.HEARTGIFT_BASE_URL||'';
+ if(url){
+  if(!/^https:\/\//.test(url))throw Error('Live test URL must be HTTPS');
+  url=url.endsWith('/')?url:url+'/';
+  record('test-target',{url,kind:'public GitHub Pages'});
+ }else{
+  port=await freePort();
+  server=spawn('python3',['-m','http.server',String(port),'--bind','127.0.0.1','--directory',path.join(base,'site')],{cwd:base,stdio:['ignore','pipe','pipe']});
+  writeFileSync(path.join(logs,'resource-registry.json'),JSON.stringify({task_id:'dlove-original-1911-smoke',owner:'TASK-OWNED',pid:server.pid,port,created:new Date().toISOString(),cwd:base},null,2));
+  url='http://127.0.0.1:'+port+'/';
+  for(let i=0;i<70;i++){if(server.exitCode!==null)throw Error('server exited');
+   try{if((await fetch(url)).ok)break;}catch(_){/* retry */} await sleep(120);
+  }
  }
  browser=await chromium.launch({headless:true,...(process.env.CHROME_BINARY?{executablePath:process.env.CHROME_BINARY}:{}),args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl','--disable-dev-shm-usage']});
  const page=await browser.newPage({viewport:{width:900,height:780}});
  page.on('pageerror',e=>errors.push(e.message));
+ page.on('request',req=>{if(req.url().includes('apiv2.deargift.online'))externalApiCalls.push(req.url())});
  page.on('response',r=>{if(r.status()>=400 && r.url().startsWith(url))errors.push('HTTP '+r.status()+' '+r.url())});
  page.on('requestfailed',r=>{if(r.url().startsWith(url))errors.push('request failed '+r.url())});
  // Test full experience with the actual published config and real images (no mocked assets).
  await page.goto(url,{waitUntil:'domcontentloaded',timeout:25000});
  await page.locator('#start-wrap').waitFor({state:'visible',timeout:25000});
+ await page.waitForFunction(()=>getComputedStyle(document.getElementById('loading')).display==='none',undefined,{timeout:30000});
  record('start-visible',{title:await page.title()});
  const start=await page.locator('#start-wrap').boundingBox();
  await page.mouse.move(start.x+start.width/2,start.y+start.height/2);await page.mouse.down();await sleep(1450);await page.mouse.up();
@@ -67,6 +77,7 @@ try{
  if(!finalSrc?.includes('images/photos/11.webp'))throw Error('Unexpected letter image '+finalSrc);
  await page.screenshot({path:path.join(logs,'original-letter-with-user-photos.png')});
  record('exact-letter-and-final-photo',{length:received.length,finalSrc});
+ if(externalApiCalls.length)throw Error('Original API called: '+externalApiCalls.join('; '));
  if(errors.length)throw Error('Browser errors: '+errors.join('; '));
  record('passed');
 }catch(e){errors.push(String(e.stack||e));record('failed',{error:String(e.message||e)});process.exitCode=1;}
