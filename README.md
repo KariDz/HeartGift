@@ -85,6 +85,20 @@ An editable example is provided in `public/config.example.json`.
 3. To show a personal image at the end of the letter, set `letter.image` to the image path.
 4. Preview with `npm run dev` and rebuild with `npm run build`.
 
+### Import a personal 19.11 photo ZIP
+
+If you have the downloadable `HeartGift-personal-19-11.zip` (or `dlove-1911-anh-iu-webp-update.zip`), copy it **outside the repository**, then run:
+
+```bash
+python3 scripts/import_personal_zip.py /path/to/HeartGift-personal-19-11.zip
+npm run build
+npm test
+```
+
+The script imports all 11 photos, optimizes them to WebP, and updates the final letter photo. It saves backups in `workspace/temp/heartgift` and does not add the source ZIP to Git.
+
+**The initial public commit deliberately contains generic example photos.** Import and commit the personal photos separately if you explicitly want them publicly visible on GitHub Pages.
+
 To add music, place a file you have permission to use in `public/music/`, then set `music.src`, for example `"music/our-song.mp3"`. Audio starts only after user interaction, respecting browser autoplay rules.
 
 > **Privacy warning:** Everything in `public/` is accessible to everyone on a public deployment. Do not commit private or identifying photos or messages without the appropriate consent. Git history can retain previous files even after you delete them.
@@ -111,6 +125,7 @@ HeartGift/
 ├── scripts/
 │   ├── generate_demo_photos.py
 │   ├── heart_qr.py               # QR generator
+│   ├── import_personal_zip.py    # Install 11 photos from a private ZIP
 │   └── _vendor/                  # BSD-licensed QR encoder
 ├── .github/workflows/pages.yml  # Automatic GitHub Pages publishing
 └── README.md
