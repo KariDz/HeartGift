@@ -622,6 +622,9 @@
     // - ?<websiteId> -> gọi API womenday
     // - không gì cả -> dùng DEFAULT_APP_CONFIG
     (function() {
+        // This adaptation always uses its local JSON, even on /HeartGift/ (GitHub Pages).
+        // Do not interpret the GitHub repository name as a DLove custom slug.
+        if (window.__DL_OFFLINE) return;
         const params = new URLSearchParams(location.search);
         const preview = params.get('preview');
 

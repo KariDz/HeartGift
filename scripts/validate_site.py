@@ -14,6 +14,7 @@ assert cfg.get('letter',{}).get('text')==expected,'19.11 wish changed unexpected
 assert len(cfg.get('sphereImages',[]))==11,'Expected all 11 user images'
 assert html.count('gift-config.json')>=1,'Missing local gift config loader'
 assert 'window.__DL_OFFLINE = true' in html,'Original remote config might be loaded'
+assert 'if (window.__DL_OFFLINE) return;' in html,'GitHub Pages path could trigger remote DLove API'
 assert 'three.module.js' in html and 'startCupidLetterSequence' in html,'Original viewer code missing'
 assert (SITE/'vendor/three/build/three.module.js').is_file(),'Missing local Three.js'
 assert (SITE/'assets/fonts/Pacifico-Regular.ttf').is_file(),'Missing local font'
