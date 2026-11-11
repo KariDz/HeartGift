@@ -14,6 +14,7 @@ expected='19.11 làm sao em để anh iu của em thiệt thòi được. Món q
 assert cfg.get('letter',{}).get('text')==expected,'19.11 wish changed unexpectedly'
 assert isinstance(cfg.get('sphereImages'),list) and len(cfg['sphereImages'])>0,'Upload at least one photo'
 assert len(set(cfg['sphereImages']))==len(cfg['sphereImages']),'Duplicate image paths in sphereImages'
+assert cfg.get('particleImage')=='images/photos/01.webp','The opening morph must show the star-background couple photo (01.webp)'
 assert html.count('gift-config.json')>=1,'Missing local gift config loader'
 assert 'window.__DL_OFFLINE = true' in html,'Original remote config might be loaded'
 assert 'if (window.__DL_OFFLINE) return;' in html,'GitHub Pages path could trigger remote DLove API'

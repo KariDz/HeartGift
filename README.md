@@ -69,7 +69,7 @@ The existing edition intentionally uses the exact message:
 
 ### Replace the pictures
 
-Put new images under `site/images/photos/` and update the paths in `site/gift-config.json`. We recommend WebP, with the longest edge around 1200 px. This repository currently contains **37 real personal images**, not placeholder examples, at `site/images/photos/01.webp` through `37.webp`. The image at `10.webp` is used for the glowing morph. **`01.webp`** is now the newly supplied two-person photo; the old `01.webp` was preserved as **`23.webp`**. The letter ends with **`11.webp`**, the photo containing the words **“em yêu phong”**.
+Put new images under `site/images/photos/` and update the paths in `site/gift-config.json`. We recommend WebP, with the longest edge around 1200 px. This repository currently contains **37 real personal images**, not placeholder examples, at `site/images/photos/01.webp` through `37.webp`. The opening particle morph uses **`01.webp`** (the couple against the starry backdrop), not the Polaroid photo `10.webp`. **`01.webp`** is now the newly supplied two-person photo; the old `01.webp` was preserved as **`23.webp`**. The letter ends with **`11.webp`**, the photo containing the words **“em yêu phong”**.
 
 **Update of 11 November 2026:** 38 JPGs were reviewed; 11 were visually near-identical to existing photos and one pair of new JPGs was near-identical. The remaining **26 photos** were added as `12.webp`–`37.webp`. The separately supplied photo of two people (also present in the ZIP) was originally saved as `23.webp`; after the later request it was moved to image 1, with the original image 1 swapped to 23. The final letter now uses image 11.
 

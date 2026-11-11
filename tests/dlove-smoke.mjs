@@ -47,6 +47,8 @@ try{
    AuditedAudio.prototype=NativeAudio.prototype;
    window.Audio=AuditedAudio;
  });
+ const openingPhotoResponses=[];
+ page.on('response',r=>{if(r.url().includes('/images/photos/01.webp')&&r.ok())openingPhotoResponses.push(r.url())});
  page.on('pageerror',e=>errors.push(e.message));
  page.on('request',req=>{if(req.url().includes('apiv2.deargift.online'))externalApiCalls.push(req.url())});
  page.on('response',r=>{if(r.status()>=400 && r.url().startsWith(url))errors.push('HTTP '+r.status()+' '+r.url())});
@@ -55,6 +57,9 @@ try{
  await page.goto(url,{waitUntil:'domcontentloaded',timeout:25000});
  await page.locator('#start-wrap').waitFor({state:'visible',timeout:25000});
  await page.waitForFunction(()=>getComputedStyle(document.getElementById('loading')).display==='none',undefined,{timeout:30000});
+ if(cfg.particleImage!=='images/photos/01.webp')throw Error('Wrong particle image config: '+cfg.particleImage);
+ if(!openingPhotoResponses.length)throw Error('Opening particle photo 01.webp was not fetched before start screen');
+ record('opening-particle-image-is-01',{photo:cfg.particleImage,requests:openingPhotoResponses.length});
  record('start-visible',{title:await page.title()});
  const start=await page.locator('#start-wrap').boundingBox();
  await page.mouse.move(start.x+start.width/2,start.y+start.height/2);await page.mouse.down();await sleep(1450);await page.mouse.up();
