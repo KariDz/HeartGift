@@ -139,19 +139,27 @@ You can review the workflow in [Actions](https://github.com/KariDz/HeartGift/act
 
 ## Heart-shaped QR code
 
-A ready-to-scan QR encoding the deployed website is available at `site/qr/heartgift.png` and `site/qr/heartgift.svg`.
+The QR is now generated **entirely by Python** and visually matches the red-on-black heart reference:
 
-To regenerate it for a different URL:
+- The real QR data is rotated **45°**, placing its three large finder patterns at the top, left, and right of a diamond.
+- Procedural red tiles around that data form the two lobes and point of the heart.
+- A small white circular badge with a red heart decorates the center.
+- The encoded URL is **https://karidz.github.io/HeartGift/**, with QR error correction level **H**.
+
+Files: `site/qr/heartgift.png` (1400×1820), `site/qr/heartgift.svg` (scalable vector), and `site/qr/heartgift-scan-safe.png` (standard high-contrast QR). The original simple heart-framed generator is still available in `scripts/heart_qr.py`.
+
+To regenerate the *red, diamond QR* for any website URL:
 
 ```bash
 python3 -m pip install Pillow
-python3 scripts/heart_qr.py \
+python3 scripts/heart_qr_style.py \
   --url 'https://YOUR-NAME.github.io/HeartGift/' \
-  --output site/qr/heartgift \
-  --label 'SCAN WITH LOVE'
+  --output site/qr/heartgift
 ```
 
-The QR data is an unmodified high-error-correction square surrounded by a decorative heart, not cropped into an unreadable shape. You can check the generated PNG with any QR scanner.
+The repository includes the QR encoder under `scripts/_vendor`; the generator does not need a backend or third-party QR service. Optional automatic decoding validation uses OpenCV if installed (`python3 -m pip install opencv-python`). The generated SVG is real vector geometry and can be edited or printed at any size.
+
+**Scanning note:** Red QR modules on a black background are *light-on-dark*. The stylized PNG/SVG decode correctly with OpenCV and ZBar **after color inversion**. Some phone scanners may automatically handle inversion, but others may not. Use `heartgift-scan-safe.png` when reliable scanning matters most, especially for print, and test with a real phone before sharing.
 
 ## Source and rights
 

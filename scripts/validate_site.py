@@ -2,6 +2,7 @@
 """Validate the browser-captured DLove viewer and user-edited 19.11 assets."""
 from pathlib import Path
 from PIL import Image
+from xml.etree import ElementTree
 import json,sys,hashlib
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -39,6 +40,12 @@ for p in (SITE/cfg['letter']['image'],SITE/'qr/heartgift.png',SITE/'qr/heartgift
     assert p.is_file(),f'Missing {p}'
 with Image.open(SITE/cfg['letter']['image']) as letter_image:
     letter_image.verify()
+for qr_image in (SITE/'qr/heartgift.png', SITE/'qr/heartgift-scan-safe.png'):
+    with Image.open(qr_image) as image:
+        assert image.format=='PNG' and image.width>=500
+        image.verify()
+svg_root=ElementTree.parse(SITE/'qr/heartgift.svg').getroot()
+assert svg_root.tag.endswith('svg'), 'QR SVG invalid'
 print('VALIDATED: Original viewer,',len(all_photos),'unique WebP images, exact wish, local fonts/music/vendors, local QR')
 print('Personal photos total:',sum(p.stat().st_size for p in all_photos),'bytes')
 print('Website files:',sum(1 for _ in SITE.rglob('*') if _.is_file()))
