@@ -1,178 +1,130 @@
 <div align="center">
 
-# ♥ HeartGift
+# 💗 HeartGift · 19.11
 
-**A small gift. A whole lot of love.**
+**The original DLove browser experience, personalized with memories and a letter.**
 
-A delightful, interactive love letter with a starry background, 3D memory sphere, animated envelope and personal message. Built with modern web technologies and designed to be easy to customize.
-
-[Live website](https://karidz.github.io/HeartGift/) · [Customize](#personalization) · [Deploy](#deploy-with-github-pages) · [Heart QR](#heart-shaped-qr-code)
+**[Open the live gift](https://karidz.github.io/HeartGift/)** · [Configuration](#customize-your-gift) · [QR Code](#heart-shaped-qr-code) · [Source & licensing](#source-and-rights)
 
 </div>
 
-## What makes HeartGift special?
+## About this edition
 
-- **Romantic, interactive introduction:** press and hold to open your present (keyboard: Enter/Space).
-- **Personalized words:** a sequence of animated messages before your memories appear.
-- **3D photo sphere:** rotate, zoom, and scatter memories with two taps.
-- **Animated love letter:** open an envelope and read a typewriter-style message.
-- **Fully static:** no accounts, databases, tracking, or backend.
-- **Privacy-conscious:** demo images are original generated placeholders, while your own memories can be added as local files.
-- **Responsive:** supports desktop and mobile layouts and reduced motion.
-- **Heart-shaped QR:** included Python tool creates PNG and SVG codes designed to remain reliably scannable.
+This **19.11 edition uses the browser-delivered HTML, CSS, JavaScript and animations** of the [DLove gift viewer](https://w.dlove.vn/index.html?e0c7194b6d25b713), downloaded for the linked gift and adapted for local static hosting. This is **not** the independently reimplemented HeartGift v1 UI. The previous independent implementation is preserved on the Git branch `backup-independent-v1`.
 
-## Getting started
+The current gift retains the original viewer's interactive sequence:
 
-Prerequisites: **Node.js 22+** and npm.
+1. **Hold to begin** — start the surprise.
+2. **Glowing particle morphs** — animated text and a personal photo.
+3. **3D memory sphere** — all eleven photos mapped around a sphere.
+4. **Click twice** — zoom into the sphere and release the floating photo gallery.
+5. **Cupid delivers an envelope** — tap the letter button, then the envelope.
+6. **A typewriter love letter** — the exact 19.11 wish appears, followed by a final photograph.
+
+The eleven supplied photographs were optimized as WebP. They are configured in `site/gift-config.json`. The original viewer's third-party guest photos, telemetry loader and commercial song are **not** redistributed here; a short, newly synthesized ambient loop is used instead.
+
+## Start locally
+
+Only Python 3 is needed to serve the saved website; no production backend, API token or remote resources are needed.
 
 ```bash
 git clone https://github.com/KariDz/HeartGift.git
 cd HeartGift
+python3 -m http.server 8000 --bind 127.0.0.1 --directory site
+```
+
+Open **http://127.0.0.1:8000/**. Opening `site/index.html` via `file://` does not reliably work because browsers restrict local JSON fetching.
+
+For the optional build and automated tests:
+
+```bash
 npm ci
-npm run dev
-```
-
-Open the local address printed by Vite. Production build:
-
-```bash
+python3 -m pip install Pillow
 npm run check
-npm run build
-npm run preview
-```
-
-The compiled static website is in `dist/`.
-
-## Personalization
-
-**All user-facing content is configured in `public/config.json`.** You can replace your text and images without editing JavaScript.
-
-```json
-{
-  "pageTitle": "A special gift for you",
-  "morphTexts": ["YOU", "ARE", "LOVED"],
-  "photos": [
-    "images/photos/01.webp",
-    "images/photos/02.webp"
-  ],
-  "letter": {
-    "greeting": "Dear you,",
-    "message": "Thank you for being here.",
-    "image": "images/letter-cover.svg",
-    "caption": "One little memory",
-    "signature": "With love ♡"
-  },
-  "music": {
-    "src": "",
-    "volume": 0.45
-  }
-}
-```
-
-An editable example is provided in `public/config.example.json`.
-
-| What to change | File / setting |
-| --- | --- |
-| Website title and introductory text | `public/config.json` → `pageTitle`, `intro` |
-| Animated greeting words | `morphTexts` |
-| Pictures in the 3D sphere | `photos` |
-| Opening greeting, full letter, photo and signature | `letter` |
-| Optional background music | `music.src`, `music.volume` |
-
-### Replace photos
-
-1. Put your WebP/JPG/PNG photos in `public/images/photos/`. WebP and a longest edge of roughly 800–1200 px are recommended.
-2. Update the `photos` paths in `public/config.json`. You can have fewer or more than 11 photos.
-3. To show a personal image at the end of the letter, set `letter.image` to the image path.
-4. Preview with `npm run dev` and rebuild with `npm run build`.
-
-### Import a personal 19.11 photo ZIP
-
-If you have the downloadable `HeartGift-personal-19-11.zip` (or `dlove-1911-anh-iu-webp-update.zip`), copy it **outside the repository**, then run:
-
-```bash
-python3 scripts/import_personal_zip.py /path/to/HeartGift-personal-19-11.zip
 npm run build
 npm test
 ```
 
-The script imports all 11 photos, optimizes them to WebP, and updates the final letter photo. It saves backups in `workspace/temp/heartgift` and does not add the source ZIP to Git.
+The completed static deployment is in `dist/`.
 
-**The initial public commit deliberately contains generic example photos.** Import and commit the personal photos separately if you explicitly want them publicly visible on GitHub Pages.
+## Customize your gift
 
-To add music, place a file you have permission to use in `public/music/`, then set `music.src`, for example `"music/our-song.mp3"`. Audio starts only after user interaction, respecting browser autoplay rules.
+**Edit only `site/gift-config.json`** to change the gift, or start with `site/gift-config.example.json`.
 
-> **Privacy warning:** Everything in `public/` is accessible to everyone on a public deployment. Do not commit private or identifying photos or messages without the appropriate consent. Git history can retain previous files even after you delete them.
+| Setting | Function |
+| --- | --- |
+| `appTitle` | Browser title and mobile app name |
+| `morphTexts` | Animated lines displayed during the particle effect |
+| `particleImage` | Picture that forms from glowing particles |
+| `sphereImages` | Photos around the 3D sphere, in order |
+| `letter.text` | Full typed-out letter |
+| `letter.image` | Final picture shown below the message |
+| `letter.caption` | Caption accompanying the final image |
+| `bgMusic` | Path to a locally hosted, appropriately licensed music file |
+| `enableMorphEffect`, `enableSphere`, `enableLetter` | Turn individual stages on/off |
 
-## Source organization
+The existing edition intentionally uses the exact message:
+
+> 19.11 làm sao em để anh iu của em thiệt thòi được. Món quà nhỏ gửi đến anh, mong rằng mỗi ngày của anh đều ngập tràn hạnh phúc. Cảm ơn anh vì đã xuất hiện trong cuộc đời em.
+
+### Replace the pictures
+
+Put new images under `site/images/photos/` and update the paths in `site/gift-config.json`. We recommend WebP, with the longest edge around 1200 px. This repository currently contains **eleven real personal images**, not placeholder examples, at `site/images/photos/01.webp` through `11.webp`. The image at `10.webp` is used for the glowing morph; `11.webp` is also the photo in the letter.
+
+**Privacy:** Because this repository and GitHub Pages are public, anyone with the URL can view the photos and text. Obtain the appropriate consent before publishing someone else's photographs or private messages. Deleting an image in a later commit does not necessarily remove it from Git history.
+
+## Project structure
 
 ```text
 HeartGift/
-├── public/
-│   ├── config.json               # Personalize text, images and music
-│   ├── config.example.json
-│   ├── images/
-│   │   ├── photos/               # Your own gallery
-│   │   ├── heart.svg
-│   │   └── letter-cover.svg
-│   └── qr/                       # Scannable QR images
-├── src/
-│   ├── main.js                   # Experience controller
-│   ├── config.js                 # Read and validate configuration
-│   ├── particles.js              # Ambient starlight
-│   ├── sphere.js                 # Interactive 3D memory sphere
-│   ├── letter.js                 # Envelope + typed message
-│   └── styles.css                # Theme, accessibility, responsiveness
+├── site/
+│   ├── index.html                # DLove browser-delivered viewer (adapted)
+│   ├── gift-config.json          # All editable content and toggles
+│   ├── gift-config.example.json
+│   ├── images/photos/            # 11 personal WebP pictures
+│   ├── assets/                   # Original viewer's required static assets/fonts
+│   ├── musics/heartgift-ambient.wav
+│   ├── vendor/                   # Local Three.js & simplex-noise
+│   └── qr/                       # Heart QR PNG + SVG
 ├── scripts/
-│   ├── generate_demo_photos.py
-│   ├── heart_qr.py               # QR generator
-│   ├── import_personal_zip.py    # Install 11 photos from a private ZIP
-│   └── _vendor/                  # BSD-licensed QR encoder
-├── .github/workflows/pages.yml  # Automatic GitHub Pages publishing
-└── README.md
+│   ├── validate_site.py         # Ensure the offline site has all required files
+│   ├── build_site.py            # Copy the static website to dist/
+│   ├── heart_qr.py              # QR-code generator
+│   └── _vendor/                 # Python qrcode library (BSD-3-Clause)
+├── tests/
+│   └── dlove-smoke.mjs           # Test the original interaction from start to letter
+├── .github/workflows/pages.yml
+└── SOURCE.md                     # Source provenance and rights
 ```
 
-## Deploy with GitHub Pages
+The viewer JavaScript and CSS were originally inline in the HTML; they remain there intentionally to preserve the exact behavior of the captured website. The customizable content has been separated into JSON and independent photo files.
 
-A workflow in `.github/workflows/pages.yml` builds and publishes this website on every push to `main`.
+## GitHub Pages
 
-1. Create a GitHub repository and push this source to its `main` branch.
-2. In the repository, go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **GitHub Actions**.
-4. Verify **Actions → Build and deploy HeartGift** finishes successfully.
-5. Visit `https://YOUR-USERNAME.github.io/YOUR-REPO/` or your configured custom domain.
+GitHub Actions automatically validates, builds and publishes `site/` (as `dist/`) whenever `main` changes.
 
-The Vite configuration uses a relative base path to support GitHub Pages project URLs.
+**Deployed URL:** https://karidz.github.io/HeartGift/
+
+You can review the workflow in [Actions](https://github.com/KariDz/HeartGift/actions).
 
 ## Heart-shaped QR code
 
-`scripts/heart_qr.py` generates two files: a printable PNG and a vector SVG. The QR matrix keeps its rectangular quiet zone, while a heart surrounds it as a design element. This preserves scannability.
+A ready-to-scan QR encoding the deployed website is available at `site/qr/heartgift.png` and `site/qr/heartgift.svg`.
 
-Prerequisites: Python 3.10+ and Pillow. A BSD-3-Clause-licensed version of the `qrcode` library is included under `scripts/_vendor/`.
+To regenerate it for a different URL:
 
 ```bash
 python3 -m pip install Pillow
 python3 scripts/heart_qr.py \
-  --url "https://YOUR-USERNAME.github.io/YOUR-REPO/" \
-  --output public/qr/heartgift \
-  --label "SCAN WITH LOVE"
+  --url 'https://YOUR-NAME.github.io/HeartGift/' \
+  --output site/qr/heartgift \
+  --label 'SCAN WITH LOVE'
 ```
 
-The included QR currently encodes `https://karidz.github.io/HeartGift/`. Recreate it if you change your website's address. Do not distribute a QR until you verify the actual deployed URL.
+The QR data is an unmodified high-error-correction square surrounded by a decorative heart, not cropped into an unreadable shape. You can check the generated PNG with any QR scanner.
 
-## Tests
+## Source and rights
 
-```bash
-npm run check
-npm run build
-npm test
-```
+The browser-viewer source and imagery originated from the linked **DLove** webpage, and are distinct from the previous independently implemented HeartGift application. The original creator retains their rights. A webpage being publicly accessible **does not** automatically make its code and illustrations open source. **No MIT license is asserted for the extracted viewer or upstream assets.** See [SOURCE.md](SOURCE.md) for provenance and changes, [SECURITY.md](SECURITY.md) for privacy, and [CONTRIBUTING.md](CONTRIBUTING.md) for contributor guidance.
 
-Browser tests require Chromium; install with `npx playwright install chromium` when necessary.
-
-## Open source
-
-HeartGift's **independent application code and original demo visuals** use the [MIT License](LICENSE). Three.js is MIT licensed; the vendored Python `qrcode` library is BSD-3-Clause licensed (see `scripts/_vendor/LICENSE-qrcode.txt`).
-
-HeartGift does not incorporate the original proprietary DLove viewer, its branding, third-party photos, or licensed music. It is not affiliated with that service.
-
-Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+This is a reproduction of the **frontend delivered to visitors**, not the original private backend, database or developer project files.

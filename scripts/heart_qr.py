@@ -94,7 +94,7 @@ def generate(url, output, label):
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--url",required=True,help="The complete public URL to encode")
-    p.add_argument("--output",default="public/qr/heartgift",type=Path,help="Output filename stem")
+    p.add_argument("--output",default="site/qr/heartgift",type=Path,help="Output filename stem")
     p.add_argument("--label",default="SCAN WITH LOVE",help="Caption below the heart")
     args=p.parse_args()
     generate(args.url,args.output,args.label)

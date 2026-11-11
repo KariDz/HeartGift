@@ -17,9 +17,9 @@ args=parser.parse_args()
 if args.max_edge<200 or args.max_edge>4000:parser.error('--max-edge must be 200..4000')
 if args.quality<30 or args.quality>95:parser.error('--quality must be 30..95')
 if not args.archive.is_file():parser.error('Archive file does not exist')
-target=ROOT/'public/images/photos'
+target=ROOT/'site/images/photos'
 target.mkdir(parents=True,exist_ok=True)
-conf=ROOT/'public/config.json'
+conf=ROOT/'site/gift-config.json'
 original=json.loads(conf.read_text())
 now=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
 backup=ROOT/'../../temp/heartgift/photo-backup'/now
@@ -49,10 +49,11 @@ for p,data in processed:
     temp.write_bytes(data)
     temp.replace(p)
 shutil.copy2(conf,backup/'config.json')
-original['photos']=[f'images/photos/{i:02d}.webp' for i in range(1,12)]
+original['sphereImages']=[f'images/photos/{i:02d}.webp' for i in range(1,12)]
+original['particleImage']='images/photos/10.webp'
 original['letter']['image']='images/photos/11.webp'
 original['letter']['caption']='Một khoảnh khắc chỉ dành cho anh 💗'
 conf.write_text(json.dumps(original,ensure_ascii=False,indent=2)+'\n')
 print('Imported',len(processed),'photos; optimized total',sum(len(d) for _,d in processed),'bytes')
 print('Backups:',backup)
-print('Next: npm run build && npm test; git add public/config.json public/images/photos && git commit ... && git push origin main')
+print('Next: npm run build && npm test; git add site/gift-config.json site/images/photos && git commit ... && git push origin main')

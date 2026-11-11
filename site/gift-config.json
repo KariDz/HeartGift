@@ -1,0 +1,41 @@
+{
+  "websiteId": "",
+  "appTitle": "Món quà 19.11 gửi anh 💗",
+  "appIcon": "assets/images/icons/couple.png",
+  "enableWebsiteInfo": true,
+  "enablePasscode": false,
+  "enableMorphEffect": true,
+  "enableSphere": true,
+  "enableSphereFlyingImages": true,
+  "enableLetter": true,
+  "passcode": "1911",
+  "passcodeTitle": "Món quà dành cho anh",
+  "passcodeSubtitle": "Ngày đặc biệt của anh",
+  "morphTexts": [
+    "19.11",
+    "GỬI ANH",
+    "IU CỦA EM"
+  ],
+  "particleImage": "images/photos/10.webp",
+  "sphereImages": [
+    "images/photos/01.webp",
+    "images/photos/02.webp",
+    "images/photos/03.webp",
+    "images/photos/04.webp",
+    "images/photos/05.webp",
+    "images/photos/06.webp",
+    "images/photos/07.webp",
+    "images/photos/08.webp",
+    "images/photos/09.webp",
+    "images/photos/10.webp",
+    "images/photos/11.webp"
+  ],
+  "letter": {
+    "text": "19.11 làm sao em để anh iu của em thiệt thòi được. Món quà nhỏ gửi đến anh, mong rằng mỗi ngày của anh đều ngập tràn hạnh phúc. Cảm ơn anh vì đã xuất hiện trong cuộc đời em.",
+    "image": "images/photos/11.webp",
+    "caption": "Thương anh nhiều 💗"
+  },
+  "bgMusic": "musics/heartgift-ambient.wav",
+  "expiresAt": null,
+  "showWatermark": false
+}

@@ -1,12 +1,9 @@
-# Security and privacy
+# Security & privacy
 
-HeartGift is a static frontend. It intentionally has no accounts, cookies, analytics, server, or database.
+This repository is a static browser-side adaptation of a gift website. It does not require login, an external API, or a backend to display the gift.
 
-## Important privacy note
+**Important:** All files in `site/` are **publicly accessible** after deploying to GitHub Pages, including all 11 photographs and the complete message. Do not publish private content without the appropriate consent. A previous copy can remain in Git history even after deletion.
 
-Content inside `public/config.json`, `public/images/`, and `public/music/` is **publicly served** after deployment.
-Do not put secrets, personal addresses, contact details, private messages, or photographs without permission in these files.
+The local version deliberately disables third-party session-replay/telemetry integration and uses a local `gift-config.json`. Keep secrets, original API credentials, private uploads and commercial audio recordings out of the repository.
 
-Never commit secrets or `.env` files. GitHub Pages does not provide private storage for static site assets.
-
-To disclose a vulnerability, open a private security advisory on GitHub instead of a public issue when available.
+For security reports, use GitHub private security advisories where available. The vendor frontend is captured client-side code, not a security-audited library.

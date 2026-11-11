@@ -1,12 +1,7 @@
-# Contributing to HeartGift
+# Contributing
 
-Thank you for helping make HeartGift welcoming and accessible.
+For fixes to the *local build, docs, accessibility and configuration tools*, open an issue and explain the expected behavior. Run `npm run check`, `npm run build` and `npm test` before opening a pull request.
 
-1. Open an issue describing the bug or enhancement before large changes.
-2. Fork the repository and create a descriptive feature branch.
-3. Run `npm ci`, `npm run check`, `npm run build`, and `npm test`.
-4. Keep features framework-light, responsive, accessible, and easy to customize.
-5. Do **not** commit real people's photos, private messages, paid resources, or unlicensed music. Use anonymized demo assets.
-6. Send a focused pull request with screenshots and a short testing summary.
+The viewer in `site/index.html` was obtained from the publicly served DLove frontend; it is **not authored by this repository**. Please do not claim original authorship or attach a blanket MIT license to the upstream frontend. Seek authorization from rights holders before republishing upstream portions, illustrations, or recordings.
 
-Use inclusive, respectful language. Do not add analytics, tracking pixels, or external network requests without a compelling reason and clear documentation.
+Avoid committing other people's photographs, copyrighted songs, API/private data, or personal information without permission.
