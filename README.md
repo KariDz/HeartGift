@@ -111,7 +111,7 @@ HeartGift/
 ├── scripts/
 │   ├── generate_demo_photos.py
 │   ├── heart_qr.py               # QR generator
-│   └── _vendor/                  # MIT-licensed QR encoder
+│   └── _vendor/                  # BSD-licensed QR encoder
 ├── .github/workflows/pages.yml  # Automatic GitHub Pages publishing
 └── README.md
 ```
@@ -132,7 +132,7 @@ The Vite configuration uses a relative base path to support GitHub Pages project
 
 `scripts/heart_qr.py` generates two files: a printable PNG and a vector SVG. The QR matrix keeps its rectangular quiet zone, while a heart surrounds it as a design element. This preserves scannability.
 
-Prerequisites: Python 3.10+ and Pillow. A small MIT-licensed version of the `qrcode` library is included under `scripts/_vendor/`.
+Prerequisites: Python 3.10+ and Pillow. A BSD-3-Clause-licensed version of the `qrcode` library is included under `scripts/_vendor/`.
 
 ```bash
 python3 -m pip install Pillow
@@ -156,7 +156,7 @@ Browser tests require Chromium; install with `npx playwright install chromium` w
 
 ## Open source
 
-HeartGift's **independent application code and original demo visuals** use the [MIT License](LICENSE). Three.js and the vendored QR encoder have their own MIT license notices.
+HeartGift's **independent application code and original demo visuals** use the [MIT License](LICENSE). Three.js is MIT licensed; the vendored Python `qrcode` library is BSD-3-Clause licensed (see `scripts/_vendor/LICENSE-qrcode.txt`).
 
 HeartGift does not incorporate the original proprietary DLove viewer, its branding, third-party photos, or licensed music. It is not affiliated with that service.
 
